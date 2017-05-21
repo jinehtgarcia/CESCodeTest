@@ -58,7 +58,8 @@ class User extends CI_Controller {
         	$this->load->library('form_validation');
         	$this->form_validation->set_rules($this->validationConfig);
         	$this->form_validation->set_rules('email', 'email', 'callback_email_check[null]');
-        	if ($this->form_validation->run() == false)
+        	
+       if ($this->form_validation->run() == false)
         	{
         		$data['result'] = 'fail';
         		$data['errors'] = validation_errors();
@@ -66,10 +67,9 @@ class User extends CI_Controller {
         	else
         	{
         		$this->user_model->set_user();
-        		$data['result'] = 'success';
+        		$data['result'] = 'ok';
         	}
-
-        	header('Content-type: text/plain');
+        	 header_remove ("Content-type");
         	header('Content-type: application/json');
         	echo json_encode($data);
         }
@@ -87,10 +87,9 @@ class User extends CI_Controller {
         	else
         	{
         		$this->user_model->edit_user();
-        		$data['result'] = 'success';
+        		$data['result'] = 'ok';
         	}
         	
-        	header('Content-type: text/plain');
         	header('Content-type: application/json');
         	echo json_encode($data);
         }
@@ -111,7 +110,8 @@ class User extends CI_Controller {
         		return false;
         	} 
         	
-        	if ($this->user_model->exist_email($value) != $id) {
+            $exist_id = $this->user_model->exist_email($value);
+        	if ($exist_id != null && $exist_id != $id) {
         		$this->form_validation->set_message('email_check', '{field} already exists');
         		return false;
         	} 

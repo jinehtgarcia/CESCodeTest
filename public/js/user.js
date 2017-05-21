@@ -24,15 +24,16 @@ $(document).ready(function() {
 			type : 'POST',
 			url : url,
 			data : formData,
+			dataType: "json",
 			success : function(data) {
-				if(data['result'] == 'success') {
+				//alert(data);
+				if(data['result'] == 'ok') {
 					$(location).attr('href', homepage);
 				} else {
-					$('#errors').append('<div class="alert alert-danger">'+data['errors']+'</div>')
+					$('#errors').empty();
+					$('#errors').append('<div class="alert alert-danger">'+data['errors']+'</div>');
 				}
 			}
 		});
-		return false;
 	});
-
 });
