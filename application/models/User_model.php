@@ -24,7 +24,13 @@ class User_model extends CI_Model {
 		$this->db->select('id');
 		$this->db->from('user');
 		$this->db->where('email', $email);
-		$result = $this->db->get()->result_array()[0]['id'];
+		$result = $this->db->get()->result_array();
+		if (!empty($result)) {
+			$result = $result[0]['id'];
+		}
+		else {
+			$result = null;
+		}
 		return $result;
 	}
 	
